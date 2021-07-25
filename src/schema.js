@@ -15,9 +15,9 @@ module.exports = gql`
 		gender: Gender!
 		bio: String
 		avatar: String
-		# favorites: [Favorite]
-		# watched: [Watched]
-		# toWatch: [ToWatch]
+		favorites: [Movie]
+		watched: [Movie]
+		toWatch: [Movie]
 	}
 
 	type Movie {
@@ -38,6 +38,13 @@ module.exports = gql`
 		favsCount: Int
 		watchedCount: Int
 		toWatchCount: Int
+	}
+
+	type Favorite {
+		id: String!
+		date: Int
+		user: User!
+		movie: Movie!
 	}
 
 	type Query {
