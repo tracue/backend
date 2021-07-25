@@ -1,0 +1,97 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Gender {
+  Male
+  Female
+  Other
+  Unknown
+}
+
+model User {
+  id            String     @id @default(uuid())
+  createdAt     DateTime   @default(now()) @map("created_at")
+  updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
+  email         String     @unique
+  password      String
+  username      String     
+  emailVerified Boolean    @default(false) @map("email_verified")
+  gender        Gender     @default(Unknown)
+  bio           String?    @db.VarChar(150)
+  avatar        String?
+  favorites     Favorite[]
+  watched       Watched[]
+  toWatch       ToWatch[]
+
+  @@map("users")
+}
+
+model Movie {
+  id               String     @id @default(uuid())
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @default(now()) @updatedAt @map("updated_at")
+  title            String
+  length           Int        @default(0)
+  genre            Genre      @relation(fields: [genreId], references: [id])
+  genreId          Int        @map("genre_id")
+  year             Int?
+  description      String?
+  shortDescription String?    @map("short_description")
+  posterUrl        String?    @map("poster_url")
+  imdbUrl          String?    @map("imdb_url")
+  ratingImdb       Int?       @map("rating_imdb")
+  ratingRotten     Int?       @map("rotten_imdb")
+  favedBy          Favorite[]
+  watchedBy        Watched[]
+  wantToWatch      ToWatch[]
+
+  @@map("movies")
+}
+
+model Favorite {
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  userId    String   @map("user_id")
+  movieId   String   @map("movie_id")
+
+  @@id([userId, movieId])
+  @@map("favorites")
+}
+
+model Watched {
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  userId    String   @map("user_id")
+  movieId   String   @map("movie_id")
+
+  @@id([userId, movieId])
+  @@map("watched")
+}
+
+model ToWatch {
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id])
+  movie     Movie    @relation(fields: [movieId], references: [id])
+  userId    String   @map("user_id")
+  movieId   String   @map("movie_id")
+
+  @@id([userId, movieId])
+  @@map("to_watch")
+}
+
+model Genre {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
+  movies Movie[]
+}
