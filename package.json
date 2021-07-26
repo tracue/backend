@@ -1,13 +1,13 @@
 {
-	"name": "muvie",
+	"name": "tracue-backend",
 	"version": "0.1.0",
-	"description": "A movie tracking app",
+	"description": "A movie tracking app | Backend",
 	"main": "./src/app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"keywords": [],
-	"author": "shayan-shojaei",
+	"author": "tracue",
 	"license": "ISC",
 	"devDependencies": {
 		"prisma": "^2.27.0"
