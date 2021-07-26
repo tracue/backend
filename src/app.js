@@ -13,6 +13,7 @@ const schema = makeExecutableSchema({ typeDefs, resolvers: [authResolvers] });
 const server = new ApolloServer({
 	schema: applyMiddleware(schema, permissions),
 	context: ({ req }) => ({ prisma, req }),
+	cors: { credentials: true, origin: '*' },
 	debug: process.env.NODE_DEV === 'development',
 });
 
