@@ -23,7 +23,7 @@ model User {
   updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
   email         String     @unique
   password      String
-  username      String     
+  username      String
   emailVerified Boolean    @default(false) @map("email_verified")
   gender        Gender     @default(Unknown)
   bio           String?    @db.VarChar(150)
@@ -36,25 +36,32 @@ model User {
 }
 
 model Movie {
-  id               String     @id @default(uuid())
-  createdAt        DateTime   @default(now()) @map("created_at")
-  updatedAt        DateTime   @default(now()) @updatedAt @map("updated_at")
+  id               String          @id @default(uuid())
+  createdAt        DateTime        @default(now()) @map("created_at")
+  updatedAt        DateTime        @default(now()) @updatedAt @map("updated_at")
   title            String
-  length           Int        @default(0)
-  genre            Genre      @relation(fields: [genreId], references: [id])
-  genreId          Int        @map("genre_id")
+  length           Int             @default(0)
+  genres           Genre[]
   year             Int?
   description      String?
-  shortDescription String?    @map("short_description")
-  posterUrl        String?    @map("poster_url")
-  imdbUrl          String?    @map("imdb_url")
-  ratingImdb       Int?       @map("rating_imdb")
-  ratingRotten     Int?       @map("rotten_imdb")
+  shortDescription String?         @map("short_description")
+  posterUrl        String?         @map("poster_url")
+  imdbUrl          String?         @map("imdb_url")
+  ratingImdb       Int?            @map("rating_imdb")
+  ratingRotten     Int?            @map("rating_rotten")
   favedBy          Favorite[]
   watchedBy        Watched[]
   wantToWatch      ToWatch[]
 
   @@map("movies")
+}
+
+model Genre {
+  id     Int             @id @default(autoincrement())
+  name   String          @unique
+  movies Movie[]
+
+  @@map("genres")
 }
 
 model Favorite {
@@ -88,11 +95,4 @@ model ToWatch {
 
   @@id([userId, movieId])
   @@map("to_watch")
-}
-
-model Genre {
-  id     Int     @id @default(autoincrement())
-  name   String  @unique
-  movies Movie[]
-  @@map("genres")
 }
