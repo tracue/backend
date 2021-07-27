@@ -2,14 +2,18 @@ const { ApolloServer } = require('apollo-server');
 const { PrismaClient } = require('@prisma/client');
 const { permissions } = require('./permissions/permissions');
 const typeDefs = require('./schema');
-const authResolvers = require('./authentication/resolvers');
+const authResolvers = require('./resolvers/auth');
+const moviesResolvers = require('./resolvers/movies');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
 const { applyMiddleware } = require('graphql-middleware');
 require('dotenv').config();
 
 const prisma = new PrismaClient();
 
-const schema = makeExecutableSchema({ typeDefs, resolvers: [authResolvers] });
+const schema = makeExecutableSchema({
+	typeDefs,
+	resolvers: [authResolvers, moviesResolvers],
+});
 const server = new ApolloServer({
 	schema: applyMiddleware(schema, permissions),
 	context: ({ req }) => ({ prisma, req }),
@@ -18,7 +22,7 @@ const server = new ApolloServer({
 });
 
 server
-	.listen()
+	.listen({ port: process.env.PORT || 4000 })
 	.then(({ url }) => console.log(`listening on ${url}`))
 	.catch((e) => console.error(e))
 	.finally(() => prisma.$disconnect());

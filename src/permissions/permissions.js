@@ -4,6 +4,7 @@ module.exports = {
 	permissions: shield({
 		Query: {
 			me: isAuthenticated,
+			searchMovies: isAuthenticated,
 		},
 		Mutation: {
 			updateUser: isAuthenticated,

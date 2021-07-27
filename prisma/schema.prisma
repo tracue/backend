@@ -36,19 +36,19 @@ model User {
 }
 
 model Movie {
-  id               String          @id @default(uuid())
-  createdAt        DateTime        @default(now()) @map("created_at")
-  updatedAt        DateTime        @default(now()) @updatedAt @map("updated_at")
+  id               String     @id @default(uuid())
+  createdAt        DateTime   @default(now()) @map("created_at")
+  updatedAt        DateTime   @default(now()) @updatedAt @map("updated_at")
+  tmdbId           Int        @unique @map("tmdb_id")
   title            String
-  length           Int             @default(0)
+  director         String?
+  length           Int        @default(0)
   genres           Genre[]
   year             Int?
   description      String?
-  shortDescription String?         @map("short_description")
-  posterUrl        String?         @map("poster_url")
-  imdbUrl          String?         @map("imdb_url")
-  ratingImdb       Int?            @map("rating_imdb")
-  ratingRotten     Int?            @map("rating_rotten")
+  shortDescription String?    @map("short_description")
+  posterUrl        String?    @map("poster_url")
+  imdbUrl          String?    @map("imdb_url")
   favedBy          Favorite[]
   watchedBy        Watched[]
   wantToWatch      ToWatch[]
@@ -57,8 +57,8 @@ model Movie {
 }
 
 model Genre {
-  id     Int             @id @default(autoincrement())
-  name   String          @unique
+  id     Int     @id @default(autoincrement())
+  name   String  @unique
   movies Movie[]
 
   @@map("genres")

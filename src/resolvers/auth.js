@@ -65,28 +65,7 @@ module.exports = {
 			}
 		},
 	},
-	Movie: {
-		genre: async ({ id }, _, { prisma }) => {
-			try {
-				const {
-					genre: { name },
-				} = await prisma.movie.findUnique({
-					where: { id },
-					include: {
-						genre: {
-							select: {
-								name: true,
-							},
-						},
-					},
-				});
-				return name;
-			} catch (e) {
-				console.error(e);
-				return null;
-			}
-		},
-	},
+
 	Mutation: {
 		signup: async (_, { email, username, password }, { prisma }) => {
 			if (await prisma.user.findUnique({ where: { email: email } })) {

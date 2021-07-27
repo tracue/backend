@@ -21,17 +21,16 @@ module.exports = gql`
 	}
 
 	type Movie {
-		uuid: String!
+		id: String!
+		tmdbId: String!
 		title: String!
 		year: Int
 		description: String
 		shortDescription: String
-		genre: String
+		genres: [String]!
 		length: Int!
 		posterUrl: String
 		imdbUrl: String
-		ratingIMDB: Int
-		ratingRotten: Int
 		isFavorite: Boolean
 		isWatched: Boolean
 		isToWatch: Boolean
@@ -49,6 +48,7 @@ module.exports = gql`
 
 	type Query {
 		me: User!
+		searchMovies(input: String!): [Movie]!
 	}
 
 	input UserEditInput {
