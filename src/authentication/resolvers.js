@@ -115,5 +115,12 @@ module.exports = {
 			const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY);
 			return { token, user };
 		},
+		updateUser: async (_, { input }, ctx) => {
+			const userId = getUserIDFromHeaders(ctx);
+			return ctx.prisma.user.update({
+				where: { id: userId },
+				data: input,
+			});
+		},
 	},
 };

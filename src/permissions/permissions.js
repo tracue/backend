@@ -5,7 +5,8 @@ module.exports = {
 		Query: {
 			me: isAuthenticated,
 		},
-		/* Mutation: {
-	}, */
+		Mutation: {
+			updateUser: isAuthenticated,
+		},
 	}),
 };

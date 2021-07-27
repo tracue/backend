@@ -51,9 +51,16 @@ module.exports = gql`
 		me: User!
 	}
 
+	input UserEditInput {
+		username: String!
+		gender: Gender
+		bio: String
+	}
+
 	type Mutation {
 		signup(email: String!, username: String!, password: String!): LoginResponse
 		login(email: String!, password: String!): LoginResponse
+		updateUser(input: UserEditInput): User!
 	}
 
 	type LoginResponse {
