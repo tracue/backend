@@ -11,10 +11,24 @@ const search = async (query) => {
 		params: { api_key: API_KEY, query },
 	});
 
-	return results.slice(0, 5);
+	return results.slice(0, 10);
 };
 
 module.exports.search = search;
+
+const getTrending = async (page) => {
+	const url = 'https://api.themoviedb.org/3/trending/movie/week';
+	const {
+		data: { results },
+	} = await axios.get(url, {
+		params: { api_key: API_KEY, page },
+	});
+
+	return results;
+};
+
+module.exports.getTrending = getTrending;
+
 const details = async (id) => {
 	const url = `https://api.themoviedb.org/3/movie/${id}`;
 	const { data } = await axios.get(url, {

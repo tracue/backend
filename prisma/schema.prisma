@@ -43,7 +43,7 @@ model Movie {
   title            String
   director         String?
   length           Int        @default(0)
-  genres           Genre[]
+  genres           Genre[]    @relation("movies_in_genre", references: [id])
   year             Int?
   description      String?
   shortDescription String?    @map("short_description")
@@ -59,7 +59,7 @@ model Movie {
 model Genre {
   id     Int     @id @default(autoincrement())
   name   String  @unique
-  movies Movie[]
+  movies Movie[] @relation("movies_in_genre", references: [id])
 
   @@map("genres")
 }

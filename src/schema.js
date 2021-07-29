@@ -48,7 +48,8 @@ module.exports = gql`
 
 	type Query {
 		me: User!
-		searchMovies(input: String!): [Movie]!
+		search(input: String!): [Movie]!
+		trending(page: Int): [Movie]!
 	}
 
 	input UserEditInput {
