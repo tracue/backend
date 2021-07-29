@@ -16,7 +16,7 @@ const search = async (query) => {
 
 module.exports.search = search;
 
-const getTrending = async (page) => {
+const getTrending = async (page = 1) => {
 	const url = 'https://api.themoviedb.org/3/trending/movie/week';
 	const {
 		data: { results },
@@ -38,6 +38,18 @@ const details = async (id) => {
 };
 
 module.exports.details = details;
+
+const getGenres = async () => {
+	const url = `https://api.themoviedb.org/3/genre/movie/list`;
+	const {
+		data: { genres },
+	} = await axios.get(url, {
+		params: { api_key: API_KEY },
+	});
+	return genres;
+};
+
+module.exports.getGenres = getGenres;
 
 const getPosterUrl = (poster_path) => {
 	return `https://image.tmdb.org/t/p/w500${poster_path}`;

@@ -24,7 +24,7 @@ module.exports = gql`
 		id: String!
 		tmdbId: String!
 		title: String!
-		year: Int
+		releaseDate: String
 		description: String
 		shortDescription: String
 		genres: [String]!

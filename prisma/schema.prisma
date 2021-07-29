@@ -44,7 +44,7 @@ model Movie {
   director         String?
   length           Int        @default(0)
   genres           Genre[]    @relation("movies_in_genre", references: [id])
-  year             Int?
+  releaseDate      String?    @default("-") @map("release_date")
   description      String?
   shortDescription String?    @map("short_description")
   posterUrl        String?    @map("poster_url")
