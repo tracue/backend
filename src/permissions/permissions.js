@@ -6,6 +6,7 @@ module.exports = {
 			me: isAuthenticated,
 			search: isAuthenticated,
 			trending: isAuthenticated,
+			movie: isAuthenticated,
 		},
 		Mutation: {
 			updateUser: isAuthenticated,
