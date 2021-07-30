@@ -11,6 +11,10 @@ module.exports = {
 			await validateGenres(prisma);
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
+		movie: async (_, { tmdbId }, { prisma }) => {
+			await validateGenres(prisma);
+			return getMovieItem(tmdbId, prisma);
+		},
 	},
 	Movie: {
 		genres: async (movie, _, { prisma }) => {
@@ -36,7 +40,7 @@ const getMovieItem = async (movieId, prisma) => {
 		return movie;
 	} else {
 		// create and return if doesn't exist
-		const details = await TMDB.details(movieId);
+		const details = await TMDB.getDetails(movieId);
 		const genresData = details.genres.map((genre) => ({ name: genre.name }));
 		return prisma.movie.create({
 			data: {

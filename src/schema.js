@@ -22,7 +22,7 @@ module.exports = gql`
 
 	type Movie {
 		id: String!
-		tmdbId: String!
+		tmdbId: Int!
 		title: String!
 		releaseDate: String
 		description: String
@@ -50,6 +50,7 @@ module.exports = gql`
 		me: User!
 		search(input: String!): [Movie]!
 		trending(page: Int): [Movie]!
+		movie(tmdbId: Int!): Movie!
 	}
 
 	input UserEditInput {

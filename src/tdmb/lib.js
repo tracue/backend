@@ -29,7 +29,7 @@ const getTrending = async (page = 1) => {
 
 module.exports.getTrending = getTrending;
 
-const details = async (id) => {
+const getDetails = async (id) => {
 	const url = `https://api.themoviedb.org/3/movie/${id}`;
 	const { data } = await axios.get(url, {
 		params: { api_key: API_KEY },
@@ -37,7 +37,7 @@ const details = async (id) => {
 	return data;
 };
 
-module.exports.details = details;
+module.exports.getDetails = getDetails;
 
 const getGenres = async () => {
 	const url = `https://api.themoviedb.org/3/genre/movie/list`;
