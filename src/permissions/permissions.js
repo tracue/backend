@@ -10,6 +10,12 @@ module.exports = {
 		},
 		Mutation: {
 			updateUser: isAuthenticated,
+			addToFavorites: isAuthenticated,
+			removeFromFavorites: isAuthenticated,
+			addToWatched: isAuthenticated,
+			removeFromWatched: isAuthenticated,
+			addToWatchLater: isAuthenticated,
+			removeFromWatchLater: isAuthenticated,
 		},
 	}),
 };

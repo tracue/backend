@@ -82,3 +82,6 @@ const validateGenres = async (prisma) => {
 		});
 	}
 };
+
+exports.getMovieItem = getMovieItem;
+exports.validateGenres = validateGenres;

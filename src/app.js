@@ -2,6 +2,7 @@ const { ApolloServer } = require('apollo-server');
 const { PrismaClient } = require('@prisma/client');
 const { permissions } = require('./permissions/permissions');
 const typeDefs = require('./schema');
+const listsResolvers = require('./resolvers/lists');
 const authResolvers = require('./resolvers/auth');
 const moviesResolvers = require('./resolvers/movies');
 const { makeExecutableSchema } = require('@graphql-tools/schema');
@@ -12,7 +13,7 @@ const prisma = new PrismaClient();
 
 const schema = makeExecutableSchema({
 	typeDefs,
-	resolvers: [authResolvers, moviesResolvers],
+	resolvers: [authResolvers, moviesResolvers, listsResolvers],
 });
 const server = new ApolloServer({
 	schema: applyMiddleware(schema, permissions),

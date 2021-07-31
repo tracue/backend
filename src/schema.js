@@ -17,7 +17,7 @@ module.exports = gql`
 		avatar: String
 		favorites: [Movie]
 		watched: [Movie]
-		toWatch: [Movie]
+		watchLater: [Movie]
 	}
 
 	type Movie {
@@ -63,6 +63,12 @@ module.exports = gql`
 		signup(email: String!, username: String!, password: String!): LoginResponse
 		login(email: String!, password: String!): LoginResponse
 		updateUser(input: UserEditInput): User!
+		addToFavorites(movieId: String!): User!
+		removeFromFavorites(movieId: String!): User!
+		addToWatched(movieId: String!): User!
+		removeFromWatched(movieId: String!): User!
+		addToWatchLater(movieId: String!): User!
+		removeFromWatchLater(movieId: String!): User!
 	}
 
 	type LoginResponse {

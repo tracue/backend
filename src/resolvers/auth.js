@@ -46,19 +46,19 @@ module.exports = {
 				return null;
 			}
 		},
-		toWatch: async ({ id }, _, ctx) => {
+		watchLater: async ({ id }, _, ctx) => {
 			try {
-				const { toWatch } = await ctx.prisma.user.findUnique({
+				const { watchLater } = await ctx.prisma.user.findUnique({
 					where: { id },
 					include: {
-						toWatch: {
+						watchLater: {
 							select: {
 								movie: true,
 							},
 						},
 					},
 				});
-				return toWatch.map((item) => ({ ...item.movie }));
+				return watchLater.map((item) => ({ ...item.movie }));
 			} catch (e) {
 				console.error(e);
 				return null;

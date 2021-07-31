@@ -18,40 +18,40 @@ enum Gender {
 }
 
 model User {
-  id            String     @id @default(uuid())
-  createdAt     DateTime   @default(now()) @map("created_at")
-  updatedAt     DateTime   @default(now()) @updatedAt @map("updated_at")
-  email         String     @unique
+  id            String       @id @default(uuid())
+  createdAt     DateTime     @default(now()) @map("created_at")
+  updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
+  email         String       @unique
   password      String
   username      String
-  emailVerified Boolean    @default(false) @map("email_verified")
-  gender        Gender     @default(Unknown)
-  bio           String?    @db.VarChar(150)
+  emailVerified Boolean      @default(false) @map("email_verified")
+  gender        Gender       @default(Unknown)
+  bio           String?      @db.VarChar(150)
   avatar        String?
   favorites     Favorite[]
   watched       Watched[]
-  toWatch       ToWatch[]
+  watchLater    WatchLater[]
 
   @@map("users")
 }
 
 model Movie {
-  id               String     @id @default(uuid())
-  createdAt        DateTime   @default(now()) @map("created_at")
-  updatedAt        DateTime   @default(now()) @updatedAt @map("updated_at")
-  tmdbId           Int        @unique @map("tmdb_id")
+  id               String       @id @default(uuid())
+  createdAt        DateTime     @default(now()) @map("created_at")
+  updatedAt        DateTime     @default(now()) @updatedAt @map("updated_at")
+  tmdbId           Int          @unique @map("tmdb_id")
   title            String
   director         String?
-  length           Int        @default(0)
-  genres           Genre[]    @relation("movies_in_genre", references: [id])
-  releaseDate      String?    @default("-") @map("release_date")
+  length           Int          @default(0)
+  genres           Genre[]      @relation("movies_in_genre", references: [id])
+  releaseDate      String?      @default("-") @map("release_date")
   description      String?
-  shortDescription String?    @map("short_description")
-  posterUrl        String?    @map("poster_url")
-  imdbUrl          String?    @map("imdb_url")
-  favedBy          Favorite[]
-  watchedBy        Watched[]
-  wantToWatch      ToWatch[]
+  shortDescription String?      @map("short_description")
+  posterUrl        String?      @map("poster_url")
+  imdbUrl          String?      @map("imdb_url")
+  favorites        Favorite[]
+  watched          Watched[]
+  watchLater       WatchLater[]
 
   @@map("movies")
 }
@@ -86,7 +86,7 @@ model Watched {
   @@map("watched")
 }
 
-model ToWatch {
+model WatchLater {
   createdAt DateTime @default(now()) @map("created_at")
   user      User     @relation(fields: [userId], references: [id])
   movie     Movie    @relation(fields: [movieId], references: [id])
@@ -94,5 +94,5 @@ model ToWatch {
   movieId   String   @map("movie_id")
 
   @@id([userId, movieId])
-  @@map("to_watch")
+  @@map("watch_later")
 }
