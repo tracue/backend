@@ -77,5 +77,6 @@ module.exports = gql`
 
 	type LoginResponse {
 		token: String
+		user: User
 	}
 `;

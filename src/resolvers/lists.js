@@ -19,11 +19,12 @@ module.exports = {
 			removeMovieToList(movieId, 'watchLater', ctx),
 	},
 	User: {
-		favorites: async (_, __, ctx) =>
-			retrieveUserListFromDatabase('favorites', ctx),
-		watched: async (_, __, ctx) => retrieveUserListFromDatabase('watched', ctx),
-		watchLater: async (_, __, ctx) =>
-			retrieveUserListFromDatabase('watchLater', ctx),
+		favorites: async ({ id }, _, ctx) =>
+			retrieveUserListFromDatabase(id, 'favorites', ctx),
+		watched: async ({ id }, _, ctx) =>
+			retrieveUserListFromDatabase(id, 'watched', ctx),
+		watchLater: async ({ id }, _, ctx) =>
+			retrieveUserListFromDatabase(id, 'watchLater', ctx),
 	},
 };
 
@@ -63,8 +64,7 @@ const removeMovieToList = async (movieId, listName, ctx) => {
 	});
 };
 
-const retrieveUserListFromDatabase = async (listName, ctx) => {
-	const userId = getUserIDFromHeaders(ctx);
+const retrieveUserListFromDatabase = async (userId, listName, ctx) => {
 	return ctx.prisma.movie.findMany({
 		where: {
 			[listName]: {
