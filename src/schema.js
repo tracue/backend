@@ -33,10 +33,14 @@ module.exports = gql`
 		imdbUrl: String
 		isFavorite: Boolean
 		isWatched: Boolean
-		isToWatch: Boolean
-		favsCount: Int
-		watchedCount: Int
-		toWatchCount: Int
+		isWatchLater: Boolean
+		counts: MovieCountStat
+	}
+
+	type MovieCountStat {
+		favorites: Int
+		watched: Int
+		watchLater: Int
 	}
 
 	type Favorite {
