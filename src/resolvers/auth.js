@@ -83,7 +83,7 @@ module.exports = {
 				{ userId: user.id, lastSignIn: user.lastSignIn },
 				process.env.SECRET_KEY
 			);
-			return { token, user };
+			return { token };
 		},
 		login: async (_, { email, password }, { prisma }) => {
 			const user = await prisma.user.update({
@@ -103,7 +103,7 @@ module.exports = {
 				{ userId: user.id, lastSignIn: user.lastSignIn },
 				process.env.SECRET_KEY
 			);
-			return { token, user };
+			return { token };
 		},
 		updateUser: async (_, { input }, ctx) => {
 			const userId = getUserIDFromHeaders(ctx);
