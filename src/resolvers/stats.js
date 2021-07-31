@@ -1,4 +1,4 @@
-import { getUserIDFromHeaders } from '../utils.js';
+import { getUserIDFromHeaders, DateUtil } from '../utils.js';
 import { retrieveUserListFromDatabase } from './lists.js';
 
 export default {
@@ -11,11 +11,26 @@ export default {
 					'watched',
 					ctx.prisma
 				);
-				const pastDay = filterCreationDate(watchedMovies, 1);
-				const pastWeek = filterCreationDate(watchedMovies, 7);
-				const pastMonth = filterCreationDate(watchedMovies, 30);
-				const pastSeason = filterCreationDate(watchedMovies, 90);
-				const pastYear = filterCreationDate(watchedMovies, 365);
+				const pastDay = filterCreationDate(
+					watchedMovies,
+					DateUtil.getYesterday()
+				);
+				const pastWeek = filterCreationDate(
+					watchedMovies,
+					DateUtil.getLastWeek()
+				);
+				const pastMonth = filterCreationDate(
+					watchedMovies,
+					DateUtil.getLastMonth()
+				);
+				const pastSeason = filterCreationDate(
+					watchedMovies,
+					DateUtil.getLastSeason()
+				);
+				const pastYear = filterCreationDate(
+					watchedMovies,
+					DateUtil.getLastYear()
+				);
 				return {
 					pastDay,
 					pastWeek,
@@ -30,8 +45,8 @@ export default {
 	},
 };
 
-export const filterCreationDate = (movies, days) => {
+export const filterCreationDate = (movies, inbound) => {
 	return movies
-		.filter((movie) => movie.createdAt >= new Date(new Date().getDate() - days))
-		.reduce((total, movie) => total + movie['length'], 0);
+		.filter((movie) => movie.createdAt >= inbound)
+		.reduce((total, movie) => total + movie.length, 0);
 };
