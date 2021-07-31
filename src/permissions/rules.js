@@ -1,11 +1,16 @@
 const { rule } = require('graphql-shield');
-const { getUserIDFromHeaders } = require('../utils');
+const { getAuthorizationFromHeaders } = require('../utils');
 
 module.exports = {
-	isAuthenticated: rule()(async (parent, args, ctx, info) => {
-		const id = getUserIDFromHeaders(ctx);
+	isAuthenticated: rule()(async (_, __, ctx) => {
+		const auth = getAuthorizationFromHeaders(ctx);
 		const user = await ctx.prisma.user.findUnique({
-			where: { id },
+			where: {
+				tokenVerifier: {
+					id: auth.userId,
+					lastSignIn: auth.lastSignIn,
+				},
+			},
 		});
 		return user !== null;
 	}),

@@ -79,11 +79,19 @@ module.exports = {
 					username: username,
 				},
 			});
-			const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY);
+			const token = jwt.sign(
+				{ userId: user.id, lastSignIn: user.lastSignIn },
+				process.env.SECRET_KEY
+			);
 			return { token, user };
 		},
 		login: async (_, { email, password }, { prisma }) => {
-			const user = await prisma.user.findUnique({ where: { email } });
+			const user = await prisma.user.update({
+				where: { email },
+				data: {
+					lastSignIn: new Date(),
+				},
+			});
 			if (!user) {
 				throw new Error('Wrong Credentials');
 			}
@@ -91,7 +99,10 @@ module.exports = {
 			if (!validation) {
 				throw new Error('Wrong Credentials');
 			}
-			const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY);
+			const token = jwt.sign(
+				{ userId: user.id, lastSignIn: user.lastSignIn },
+				process.env.SECRET_KEY
+			);
 			return { token, user };
 		},
 		updateUser: async (_, { input }, ctx) => {

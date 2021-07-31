@@ -21,6 +21,7 @@ model User {
   id            String       @id @default(uuid())
   createdAt     DateTime     @default(now()) @map("created_at")
   updatedAt     DateTime     @default(now()) @updatedAt @map("updated_at")
+  lastSignIn    DateTime     @default(now()) @map("last_signin")
   email         String       @unique
   password      String
   username      String
@@ -33,6 +34,7 @@ model User {
   watchLater    WatchLater[]
 
   @@map("users")
+  @@unique(fields: [id, lastSignIn], name: "tokenVerifier")
 }
 
 model Movie {
