@@ -1,12 +1,12 @@
-const jwt = require('jsonwebtoken');
+import jwt from 'jsonwebtoken';
 
-module.exports.getUserIDFromHeaders = (ctx) => {
+export const getUserIDFromHeaders = (ctx) => {
 	const authToken = ctx.req.headers.authorization;
 	const token = jwt.verify(authToken, process.env.SECRET_KEY);
 	return token.userId;
 };
 
-module.exports.getAuthorizationFromHeaders = (ctx) => {
+export const getAuthorizationFromHeaders = (ctx) => {
 	const authToken = ctx.req.headers.authorization;
 	return jwt.verify(authToken, process.env.SECRET_KEY);
 };

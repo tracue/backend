@@ -1,19 +1,21 @@
-const { ApolloServer } = require('apollo-server');
-const { PrismaClient } = require('@prisma/client');
-const { permissions } = require('./permissions/permissions');
-const typeDefs = require('./schema');
-const listsResolvers = require('./resolvers/lists');
-const authResolvers = require('./resolvers/auth');
-const moviesResolvers = require('./resolvers/movies');
-const { makeExecutableSchema } = require('@graphql-tools/schema');
-const { applyMiddleware } = require('graphql-middleware');
-require('dotenv').config();
+import { ApolloServer } from 'apollo-server';
+import Prisma from '@prisma/client';
+import { permissions } from './permissions/permissions.js';
+import typeDefs from './schema.js';
+import statsResolvers from './resolvers/stats.js';
+import listsResolvers from './resolvers/lists.js';
+import authResolvers from './resolvers/auth.js';
+import moviesResolvers from './resolvers/movies.js';
+import { makeExecutableSchema } from '@graphql-tools/schema';
+import { applyMiddleware } from 'graphql-middleware';
+import dotenv from 'dotenv';
+dotenv.config();
 
-const prisma = new PrismaClient();
+const prisma = new Prisma.PrismaClient();
 
 const schema = makeExecutableSchema({
 	typeDefs,
-	resolvers: [authResolvers, moviesResolvers, listsResolvers],
+	resolvers: [authResolvers, moviesResolvers, listsResolvers, statsResolvers],
 });
 const server = new ApolloServer({
 	schema: applyMiddleware(schema, permissions),

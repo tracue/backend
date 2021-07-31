@@ -1,6 +1,6 @@
-const { getUserIDFromHeaders } = require('../utils');
+import { getUserIDFromHeaders } from '../utils.js';
 
-module.exports = {
+export default {
 	Query: {},
 	Mutation: {
 		addToFavorites: async (_, { movieId }, ctx) =>
@@ -19,12 +19,12 @@ module.exports = {
 			removeMovieToList(movieId, 'watchLater', ctx),
 	},
 	User: {
-		favorites: async ({ id }, _, ctx) =>
-			retrieveUserListFromDatabase(id, 'favorites', ctx),
-		watched: async ({ id }, _, ctx) =>
-			retrieveUserListFromDatabase(id, 'watched', ctx),
-		watchLater: async ({ id }, _, ctx) =>
-			retrieveUserListFromDatabase(id, 'watchLater', ctx),
+		favorites: async ({ id }, _, { prisma }) =>
+			retrieveUserListFromDatabase(id, 'favorites', prisma),
+		watched: async ({ id }, _, { prisma }) =>
+			retrieveUserListFromDatabase(id, 'watched', prisma),
+		watchLater: async ({ id }, _, { prisma }) =>
+			retrieveUserListFromDatabase(id, 'watchLater', prisma),
 	},
 };
 
@@ -64,8 +64,12 @@ const removeMovieToList = async (movieId, listName, ctx) => {
 	});
 };
 
-const retrieveUserListFromDatabase = async (userId, listName, ctx) => {
-	return ctx.prisma.movie.findMany({
+export const retrieveUserListFromDatabase = async (
+	userId,
+	listName,
+	prisma
+) => {
+	return prisma.movie.findMany({
 		where: {
 			[listName]: {
 				some: {

@@ -1,7 +1,7 @@
-const TMDB = require('../tdmb/lib');
-const { getUserIDFromHeaders } = require('../utils');
+import * as TMDB from '../tdmb/lib.js';
+import { getUserIDFromHeaders } from '../utils.js';
 
-module.exports = {
+export default {
 	Query: {
 		search: async (_, { input }, { prisma }) => {
 			const results = await TMDB.search(input);
@@ -78,7 +78,7 @@ const getMovieItem = async (movieId, prisma) => {
 	}
 };
 
-const validateGenres = async (prisma) => {
+export const validateGenres = async (prisma) => {
 	// check if genres have already been gathered
 	// if not, request them from the api and create in database
 	const genresCount = await prisma.genre.count();
@@ -90,7 +90,7 @@ const validateGenres = async (prisma) => {
 	}
 };
 
-const isInList = async (movieId, listName, ctx) => {
+export const isInList = async (movieId, listName, ctx) => {
 	const userId = getUserIDFromHeaders(ctx);
 	const movies = await ctx.prisma.movie.findMany({
 		where: {
@@ -109,7 +109,7 @@ const isInList = async (movieId, listName, ctx) => {
 	return movies.length > 0;
 };
 
-const getCounts = async (movieId, prisma) => {
+export const getCounts = async (movieId, prisma) => {
 	return {
 		favorites: getMovieListCount(movieId, 'favorites', prisma),
 		watched: getMovieListCount(movieId, 'watched', prisma),
@@ -117,7 +117,7 @@ const getCounts = async (movieId, prisma) => {
 	};
 };
 
-const getMovieListCount = async (movieId, listName, prisma) => {
+export const getMovieListCount = async (movieId, listName, prisma) => {
 	return prisma.user.count({
 		where: {
 			[listName]: {
@@ -130,8 +130,3 @@ const getMovieListCount = async (movieId, listName, prisma) => {
 		},
 	});
 };
-
-exports.getMovieItem = getMovieItem;
-exports.validateGenres = validateGenres;
-exports.getCounts = getCounts;
-exports.getMovieListCount = getMovieListCount;

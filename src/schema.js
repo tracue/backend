@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+import { gql } from 'apollo-server';
 
-module.exports = gql`
+export default gql`
 	enum Gender {
 		Male
 		Female
@@ -50,11 +50,20 @@ module.exports = gql`
 		movie: Movie!
 	}
 
+	type WatchTime {
+		pastDay: Int
+		pastWeek: Int
+		pastMonth: Int
+		pastSeason: Int
+		pastYear: Int
+	}
+
 	type Query {
 		me: User!
 		search(input: String!): [Movie]!
 		trending(page: Int): [Movie]!
 		movie(tmdbId: Int!): Movie!
+		watchTime: WatchTime
 	}
 
 	input UserEditInput {

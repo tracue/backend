@@ -1,8 +1,8 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const { getUserIDFromHeaders } = require('../utils');
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import { getUserIDFromHeaders } from '../utils.js';
 
-module.exports = {
+export default {
 	Query: {
 		me: async (_, __, ctx) => {
 			const userId = getUserIDFromHeaders(ctx);

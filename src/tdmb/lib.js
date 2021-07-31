@@ -1,9 +1,8 @@
-const { default: axios } = require('axios');
-require('dotenv').config();
+import axios from 'axios';
 
 const API_KEY = process.env.TMDB_KEY;
 
-const search = async (query) => {
+export const search = async (query) => {
 	const url = 'https://api.themoviedb.org/3/search/movie';
 	const {
 		data: { results },
@@ -14,9 +13,7 @@ const search = async (query) => {
 	return results.slice(0, 10);
 };
 
-module.exports.search = search;
-
-const getTrending = async (page = 1) => {
+export const getTrending = async (page = 1) => {
 	const url = 'https://api.themoviedb.org/3/trending/movie/week';
 	const {
 		data: { results },
@@ -27,9 +24,7 @@ const getTrending = async (page = 1) => {
 	return results;
 };
 
-module.exports.getTrending = getTrending;
-
-const getDetails = async (id) => {
+export const getDetails = async (id) => {
 	const url = `https://api.themoviedb.org/3/movie/${id}`;
 	const { data } = await axios.get(url, {
 		params: { api_key: API_KEY },
@@ -37,9 +32,7 @@ const getDetails = async (id) => {
 	return data;
 };
 
-module.exports.getDetails = getDetails;
-
-const getGenres = async () => {
+export const getGenres = async () => {
 	const url = `https://api.themoviedb.org/3/genre/movie/list`;
 	const {
 		data: { genres },
@@ -49,10 +42,6 @@ const getGenres = async () => {
 	return genres;
 };
 
-module.exports.getGenres = getGenres;
-
-const getPosterUrl = (poster_path) => {
+export const getPosterUrl = (poster_path) => {
 	return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
-
-module.exports.getPosterUrl = getPosterUrl;
