@@ -1,11 +1,10 @@
 import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-import { getUserIDFromHeaders } from '../utils.js';
+import TokenUtil from '../utils/token.js';
 
 export default {
 	Query: {
 		me: async (_, __, ctx) => {
-			const userId = getUserIDFromHeaders(ctx);
+			const userId = TokenUtil.getUserIDFromHeaders(ctx);
 			return ctx.prisma.user.findUnique({ where: { id: userId } });
 		},
 	},
@@ -79,10 +78,7 @@ export default {
 					username: username,
 				},
 			});
-			const token = jwt.sign(
-				{ userId: user.id, lastSignIn: user.lastSignIn },
-				process.env.SECRET_KEY
-			);
+			const token = TokenUtil.sign(user.id, user.lastSignIn);
 			return { token, user };
 		},
 		login: async (_, { email, password }, { prisma }) => {
@@ -99,14 +95,11 @@ export default {
 			if (!validation) {
 				throw new Error('Wrong Credentials');
 			}
-			const token = jwt.sign(
-				{ userId: user.id, lastSignIn: user.lastSignIn },
-				process.env.SECRET_KEY
-			);
+			const token = TokenUtil.sign(user.id, user.lastSignIn);
 			return { token, user };
 		},
 		updateUser: async (_, { input }, ctx) => {
-			const userId = getUserIDFromHeaders(ctx);
+			const userId = TokenUtil.getUserIDFromHeaders(ctx);
 			return ctx.prisma.user.update({
 				where: { id: userId },
 				data: input,

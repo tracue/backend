@@ -1,8 +1,8 @@
 import { rule } from 'graphql-shield';
-import { getAuthorizationFromHeaders } from '../utils.js';
+import TokenUtil from '../utils/token.js';
 
 export const isAuthenticated = rule()(async (_, __, ctx) => {
-	const auth = getAuthorizationFromHeaders(ctx);
+	const auth = TokenUtil.getAuthorizationFromHeaders(ctx);
 	const user = await ctx.prisma.user.findUnique({
 		where: {
 			tokenVerifier: {

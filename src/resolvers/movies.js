@@ -1,5 +1,5 @@
 import * as TMDB from '../tdmb/lib.js';
-import { getUserIDFromHeaders } from '../utils.js';
+import Token from '../utils/token.js';
 
 export default {
 	Query: {
@@ -91,7 +91,7 @@ export const validateGenres = async (prisma) => {
 };
 
 export const isInList = async (movieId, listName, ctx) => {
-	const userId = getUserIDFromHeaders(ctx);
+	const userId = Token.getUserIDFromHeaders(ctx);
 	const movies = await ctx.prisma.movie.findMany({
 		where: {
 			id: movieId,

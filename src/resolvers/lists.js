@@ -1,4 +1,4 @@
-import { getUserIDFromHeaders } from '../utils.js';
+import TokenUtil from '../utils/token.js';
 
 export default {
 	Query: {},
@@ -27,7 +27,7 @@ export default {
 };
 
 const addMovieToList = async (movieId, listName, ctx) => {
-	const userId = getUserIDFromHeaders(ctx);
+	const userId = TokenUtil.getUserIDFromHeaders(ctx);
 	return ctx.prisma.user.update({
 		where: {
 			id: userId,
@@ -44,7 +44,7 @@ const addMovieToList = async (movieId, listName, ctx) => {
 	});
 };
 const removeMovieToList = async (movieId, listName, ctx) => {
-	const userId = getUserIDFromHeaders(ctx);
+	const userId = TokenUtil.getUserIDFromHeaders(ctx);
 	return ctx.prisma.user.update({
 		where: {
 			id: userId,

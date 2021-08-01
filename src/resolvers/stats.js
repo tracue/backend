@@ -1,4 +1,4 @@
-import { getUserIDFromHeaders, DateUtil } from '../utils.js';
+import DateUtil from '../utils/date.js';
 import { retrieveUserListFromDatabase } from './lists.js';
 
 export default {
