@@ -18,6 +18,7 @@ export default gql`
 		favorites: [Movie]
 		watched: [Movie]
 		watchLater: [Movie]
+		watchTime: WatchTime
 	}
 
 	type Movie {
@@ -63,7 +64,6 @@ export default gql`
 		search(input: String!): [Movie]!
 		trending(page: Int): [Movie]!
 		movie(tmdbId: Int!): Movie!
-		watchTime: WatchTime
 	}
 
 	input UserEditInput {

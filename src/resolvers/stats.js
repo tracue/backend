@@ -2,12 +2,11 @@ import { getUserIDFromHeaders, DateUtil } from '../utils.js';
 import { retrieveUserListFromDatabase } from './lists.js';
 
 export default {
-	Query: {
-		watchTime: async (_, __, ctx) => {
-			const userId = getUserIDFromHeaders(ctx);
+	User: {
+		watchTime: async ({ id }, __, ctx) => {
 			try {
 				const watchedMovies = await retrieveUserListFromDatabase(
-					userId,
+					id,
 					'watched',
 					ctx.prisma
 				);
