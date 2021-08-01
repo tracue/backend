@@ -7,10 +7,8 @@ export default {
 			addMovieToList(movieId, 'favorites', ctx),
 		removeFromFavorites: async (_, { movieId }, ctx) =>
 			removeMovieToList(movieId, 'favorites', ctx),
-		addToWatched: async (_, { movieId }, ctx) => {
-			await removeMovieToList(movieId, 'watchLater', ctx);
-			return addMovieToList(movieId, 'watched', ctx);
-		},
+		addToWatched: async (_, { movieId }, ctx) =>
+			addMovieToList(movieId, 'watched', ctx),
 		removeFromWatched: async (_, { movieId }, ctx) =>
 			removeMovieToList(movieId, 'watched', ctx),
 		addToWatchLater: async (_, { movieId }, ctx) =>
