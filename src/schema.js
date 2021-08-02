@@ -31,6 +31,7 @@ export default gql`
 		genres: [String]!
 		length: Int!
 		posterUrl: String
+		thumbnailUrl: String
 		imdbUrl: String
 		isFavorite: Boolean
 		isWatched: Boolean

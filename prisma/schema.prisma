@@ -33,8 +33,8 @@ model User {
   watched       Watched[]
   watchLater    WatchLater[]
 
-  @@map("users")
   @@unique(fields: [id, lastSignIn], name: "tokenVerifier")
+  @@map("users")
 }
 
 model Movie {
@@ -50,6 +50,7 @@ model Movie {
   description      String?
   shortDescription String?      @map("short_description")
   posterUrl        String?      @map("poster_url")
+  thumbnailUrl     String?      @map("thumbnail_url")
   imdbUrl          String?      @map("imdb_url")
   favorites        Favorite[]
   watched          Watched[]

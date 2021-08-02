@@ -45,3 +45,7 @@ export const getGenres = async () => {
 export const getPosterUrl = (poster_path) => {
 	return `https://image.tmdb.org/t/p/w500${poster_path}`;
 };
+
+export const getThumbnailUrl = (poster_path) => {
+	return `https://image.tmdb.org/t/p/w200${poster_path}`;
+};
