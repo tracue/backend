@@ -45,7 +45,13 @@ export default {
 };
 
 export const filterCreationDate = (movies, inbound) => {
+	console.log(inbound);
+	console.log(typeof inbound);
 	return movies
-		.filter((movie) => movie.createdAt >= inbound)
+		.filter((movie) => {
+			console.log(movie.createdAt);
+			console.log(typeof movie.createdAt);
+			return movie.createdAt >= inbound;
+		})
 		.reduce((total, movie) => total + movie.length, 0);
 };

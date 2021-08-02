@@ -1,9 +1,13 @@
 export default {
 	getYesterday: () => {
-		return new Date(new Date().getDate() - 1);
+		const currentDate = new Date();
+		currentDate.setDate(currentDate.getDate() - 1);
+		return currentDate;
 	},
 	getLastWeek: () => {
-		return new Date(new Date().getDate() - 7);
+		const currentDate = new Date();
+		currentDate.setDate(currentDate.getDate() - 7);
+		return currentDate;
 	},
 	getLastMonth: () => {
 		const currentDate = new Date();
