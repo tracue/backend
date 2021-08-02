@@ -34,7 +34,6 @@ export default {
 		isWatched: async (movie, _, ctx) => isInList(movie.id, 'watched', ctx),
 		isWatchLater: async (movie, _, ctx) =>
 			isInList(movie.id, 'watchLater', ctx),
-		counts: async (movie, _, { prisma }) => getCounts(movie.id, prisma),
 	},
 };
 
@@ -107,26 +106,4 @@ export const isInList = async (movieId, listName, ctx) => {
 		},
 	});
 	return movies.length > 0;
-};
-
-export const getCounts = async (movieId, prisma) => {
-	return {
-		favorites: getMovieListCount(movieId, 'favorites', prisma),
-		watched: getMovieListCount(movieId, 'watched', prisma),
-		watchLater: getMovieListCount(movieId, 'watchLater', prisma),
-	};
-};
-
-export const getMovieListCount = async (movieId, listName, prisma) => {
-	return prisma.user.count({
-		where: {
-			[listName]: {
-				some: {
-					movie: {
-						id: movieId,
-					},
-				},
-			},
-		},
-	});
 };

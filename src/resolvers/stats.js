@@ -42,6 +42,9 @@ export default {
 			}
 		},
 	},
+	Movie: {
+		counts: async (movie, _, { prisma }) => getCounts(movie.id, prisma),
+	},
 };
 
 export const filterCreationDate = (movies, inbound) => {
@@ -54,4 +57,26 @@ export const filterCreationDate = (movies, inbound) => {
 			return movie.createdAt >= inbound;
 		})
 		.reduce((total, movie) => total + movie.length, 0);
+};
+
+export const getCounts = async (movieId, prisma) => {
+	return {
+		favorites: getMovieListCount(movieId, 'favorites', prisma),
+		watched: getMovieListCount(movieId, 'watched', prisma),
+		watchLater: getMovieListCount(movieId, 'watchLater', prisma),
+	};
+};
+
+export const getMovieListCount = async (movieId, listName, prisma) => {
+	return prisma.user.count({
+		where: {
+			[listName]: {
+				some: {
+					movie: {
+						id: movieId,
+					},
+				},
+			},
+		},
+	});
 };
