@@ -64,6 +64,7 @@ export default gql`
 		me: User!
 		search(input: String!): [Movie]!
 		trending(page: Int): [Movie]!
+		upcoming: [Movie]!
 		movie(tmdbId: Int!): Movie!
 	}
 

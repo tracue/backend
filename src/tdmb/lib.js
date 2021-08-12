@@ -23,6 +23,16 @@ export const getTrending = async (page = 1) => {
 
 	return results;
 };
+export const getUpcoming = async () => {
+	const url = 'https://api.themoviedb.org/3/movie/upcoming';
+	const {
+		data: { results },
+	} = await axios.get(url, {
+		params: { api_key: API_KEY },
+	});
+
+	return results.slice(0, 3);
+};
 
 export const getDetails = async (id) => {
 	const url = `https://api.themoviedb.org/3/movie/${id}`;

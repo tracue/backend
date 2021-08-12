@@ -13,6 +13,11 @@ export default {
 			await validateGenres(prisma);
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
+		upcoming: async (_, __, { prisma }) => {
+			const results = await TMDB.getUpcoming();
+			await validateGenres(prisma);
+			return results.map((item) => getMovieItem(item.id, prisma));
+		},
 		movie: async (_, { tmdbId }, { prisma }) => {
 			await validateGenres(prisma);
 			return getMovieItem(tmdbId, prisma);
