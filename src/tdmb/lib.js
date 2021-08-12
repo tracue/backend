@@ -59,3 +59,7 @@ export const getPosterUrl = (poster_path) => {
 export const getThumbnailUrl = (poster_path) => {
 	return `https://image.tmdb.org/t/p/w200${poster_path}`;
 };
+
+export const getBackdropUrl = (backdrop_path) => {
+	return `https://image.tmdb.org/t/p/original${backdrop_path}`;
+};

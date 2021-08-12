@@ -51,6 +51,7 @@ model Movie {
   shortDescription String?      @map("short_description")
   posterUrl        String?      @map("poster_url")
   thumbnailUrl     String?      @map("thumbnail_url")
+  backdropUrl     String?      @map("backdrop_url")
   imdbUrl          String?      @map("imdb_url")
   favorites        Favorite[]
   watched          Watched[]

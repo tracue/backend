@@ -64,6 +64,7 @@ const getMovieItem = async (movieId, prisma) => {
 				shortDescription: details.tag_line,
 				posterUrl: TMDB.getPosterUrl(details.poster_path),
 				thumbnailUrl: TMDB.getThumbnailUrl(details.poster_path),
+				backdropUrl: TMDB.getBackdropUrl(details.backdrop_path),
 				releaseDate: details.release_date,
 				tmdbId: details.id,
 				imdbUrl: details.imdb_id,
@@ -83,6 +84,7 @@ const getMovieItem = async (movieId, prisma) => {
 				imdbUrl: true,
 				posterUrl: true,
 				thumbnailUrl: true,
+				backdropUrl: true,
 			},
 		});
 	}

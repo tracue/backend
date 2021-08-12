@@ -32,6 +32,7 @@ export default gql`
 		length: Int!
 		posterUrl: String
 		thumbnailUrl: String
+		backdropUrl: String
 		imdbUrl: String
 		isFavorite: Boolean
 		isWatched: Boolean
