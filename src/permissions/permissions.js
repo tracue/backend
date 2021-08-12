@@ -6,6 +6,8 @@ export const permissions = shield({
 		search: isAuthenticated,
 		trending: isAuthenticated,
 		movie: isAuthenticated,
+		upcoming: isAuthenticated,
+		genres: isAuthenticated,
 	},
 	Mutation: {
 		updateUser: isAuthenticated,

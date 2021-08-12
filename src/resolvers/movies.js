@@ -18,6 +18,10 @@ export default {
 			await validateGenres(prisma);
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
+		genres: async (_, __, { prisma }) => {
+			await validateGenres(prisma);
+			return retrieveGenres(prisma);
+		},
 		movie: async (_, { tmdbId }, { prisma }) => {
 			await validateGenres(prisma);
 			return getMovieItem(tmdbId, prisma);
@@ -91,7 +95,7 @@ export const validateGenres = async (prisma) => {
 	if (genresCount === 0) {
 		const genres = await TMDB.getGenres();
 		await prisma.genre.createMany({
-			data: genres.map((genre) => ({ name: genre.name })),
+			data: genres.map((genre) => ({ name: genre.name, id: genre.id })),
 		});
 	}
 };
@@ -113,4 +117,8 @@ export const isInList = async (movieId, listName, ctx) => {
 		},
 	});
 	return movies.length > 0;
+};
+
+export const retrieveGenres = async (prisma) => {
+	return prisma.genre.findMany();
 };

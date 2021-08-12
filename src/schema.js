@@ -39,6 +39,11 @@ export default gql`
 		counts: MovieCountStat
 	}
 
+	type Genre {
+		name: String!
+		id: Int!
+	}
+
 	type MovieCountStat {
 		favorites: Int
 		watched: Int
@@ -66,6 +71,7 @@ export default gql`
 		trending(page: Int): [Movie]!
 		upcoming: [Movie]!
 		movie(tmdbId: Int!): Movie!
+		genres: [Genre]!
 	}
 
 	input UserEditInput {
