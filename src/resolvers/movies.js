@@ -9,9 +9,10 @@ export default {
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
 		trending: async (_, { page }, { prisma }) => {
-			const results = await TMDB.getTrending(page);
+			const { results, totalPages } = await TMDB.getTrending(page);
 			await validateGenres(prisma);
-			return results.map((item) => getMovieItem(item.id, prisma));
+			const movies = await results.map((item) => getMovieItem(item.id, prisma));
+			return { movies, totalPages };
 		},
 		upcoming: async (_, __, { prisma }) => {
 			const results = await TMDB.getUpcoming();

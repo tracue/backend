@@ -66,10 +66,15 @@ export default gql`
 		pastYear: Int
 	}
 
+	type PaginatedList {
+		movies: [Movie]!
+		totalPages: Int
+	}
+
 	type Query {
 		me: User!
 		search(input: String!): [Movie]!
-		trending(page: Int): [Movie]!
+		trending(page: Int): PaginatedList!
 		upcoming: [Movie]!
 		movie(tmdbId: Int!): Movie!
 		genres: [Genre]!

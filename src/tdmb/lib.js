@@ -16,12 +16,11 @@ export const search = async (query) => {
 export const getTrending = async (page = 1) => {
 	const url = 'https://api.themoviedb.org/3/trending/movie/week';
 	const {
-		data: { results },
+		data: { results, total_pages: totalPages },
 	} = await axios.get(url, {
 		params: { api_key: API_KEY, page },
 	});
-
-	return results;
+	return { results, totalPages };
 };
 export const getUpcoming = async () => {
 	const url = 'https://api.themoviedb.org/3/movie/upcoming';
