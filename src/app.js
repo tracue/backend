@@ -4,7 +4,7 @@ import { permissions } from './permissions/permissions.js';
 import typeDefs from './schema.js';
 import statsResolvers from './resolvers/stats.js';
 import listsResolvers from './resolvers/lists.js';
-import authResolvers from './resolvers/auth.js';
+import authResolvers from './resolvers/user.js';
 import moviesResolvers from './resolvers/movies.js';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyMiddleware } from 'graphql-middleware';

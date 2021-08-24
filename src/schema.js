@@ -86,10 +86,17 @@ export default gql`
 		bio: String
 	}
 
+	input PasswordEditInput {
+		oldPassword: String!
+		newPassword: String!
+	}
+
 	type Mutation {
 		signup(email: String!, username: String!, password: String!): LoginResponse
 		login(email: String!, password: String!): LoginResponse
 		updateUser(input: UserEditInput): User!
+		changeEmail(newEmail: String): User!
+		changePassword(input: PasswordEditInput): User!
 		addToFavorites(movieId: String!): User!
 		removeFromFavorites(movieId: String!): User!
 		addToWatched(movieId: String!): User!

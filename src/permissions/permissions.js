@@ -17,5 +17,7 @@ export const permissions = shield({
 		removeFromWatched: isAuthenticated,
 		addToWatchLater: isAuthenticated,
 		removeFromWatchLater: isAuthenticated,
+		changeEmail: isAuthenticated,
+		changePassword: isAuthenticated,
 	},
 });

@@ -105,5 +105,36 @@ export default {
 				data: input,
 			});
 		},
+		changeEmail: async (_, { newEmail }, ctx) => {
+			const userId = TokenUtil.getUserIDFromHeaders(ctx);
+			return ctx.prisma.user.update({
+				where: { id: userId },
+				data: {
+					email: newEmail,
+				},
+			});
+		},
+		changePassword: async (_, { input }, ctx) => {
+			const userId = TokenUtil.getUserIDFromHeaders(ctx);
+			const user = await ctx.prisma.user.findUnique({
+				where: { id: userId },
+			});
+			if (!user) {
+				throw new Error('Not Authorized!');
+			}
+
+			const validation = await bcrypt.compare(input.oldPassword, user.password);
+			if (!validation) {
+				throw new Error('Old Password Wrong');
+			}
+
+			const hashedPassword = await bcrypt.hash(input.newPassword, 10);
+			return ctx.prisma.user.update({
+				where: { id: userId },
+				data: {
+					password: hashedPassword,
+				},
+			});
+		},
 	},
 };
