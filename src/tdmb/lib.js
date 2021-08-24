@@ -10,7 +10,7 @@ export const search = async (query) => {
 		params: { api_key: API_KEY, query },
 	});
 
-	return results.slice(0, 10);
+	return results;
 };
 
 export const getTrending = async (page = 1) => {
@@ -30,7 +30,7 @@ export const getUpcoming = async () => {
 		params: { api_key: API_KEY },
 	});
 
-	return results.slice(0, 3);
+	return results;
 };
 
 export const getDetails = async (id) => {

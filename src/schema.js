@@ -73,9 +73,9 @@ export default gql`
 
 	type Query {
 		me: User!
-		search(input: String!): [Movie]!
-		trending(page: Int): PaginatedList!
-		upcoming: [Movie]!
+		search(input: String!, limit: Int): [Movie]!
+		trending(page: Int, limit: Int): PaginatedList!
+		upcoming(limit: Int): [Movie]!
 		movie(tmdbId: Int!): Movie!
 		genres: [Genre]!
 	}

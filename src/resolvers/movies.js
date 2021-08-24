@@ -3,19 +3,28 @@ import Token from '../utils/token.js';
 
 export default {
 	Query: {
-		search: async (_, { input }, { prisma }) => {
-			const results = await TMDB.search(input);
+		search: async (_, { input, limit }, { prisma }) => {
+			let results = await TMDB.search(input);
+			if (limit) {
+				results = results.slice(0, limit);
+			}
 			await validateGenres(prisma);
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
-		trending: async (_, { page }, { prisma }) => {
-			const { results, totalPages } = await TMDB.getTrending(page);
+		trending: async (_, { page, limit }, { prisma }) => {
+			let { results, totalPages } = await TMDB.getTrending(page);
+			if (limit) {
+				results = results.slice(0, limit);
+			}
 			await validateGenres(prisma);
 			const movies = await results.map((item) => getMovieItem(item.id, prisma));
 			return { movies, totalPages };
 		},
-		upcoming: async (_, __, { prisma }) => {
-			const results = await TMDB.getUpcoming();
+		upcoming: async (_, { limit }, { prisma }) => {
+			let results = await TMDB.getUpcoming();
+			if (limit) {
+				results = results.slice(0, limit);
+			}
 			await validateGenres(prisma);
 			return results.map((item) => getMovieItem(item.id, prisma));
 		},
