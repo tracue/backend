@@ -15,9 +15,9 @@ export default gql`
 		gender: Gender!
 		bio: String
 		avatar: String
-		favorites: [Movie]
-		watched: [Movie]
-		watchLater: [Movie]
+		favorites(limit: Int): [Movie]
+		watched(limit: Int): [Movie]
+		watchLater(limit: Int): [Movie]
 		watchTime: WatchTime
 	}
 

@@ -9,59 +9,47 @@ export default {
 		},
 	},
 	User: {
-		favorites: async ({ id }, _, ctx) => {
-			try {
-				const { favorites } = await ctx.prisma.user.findUnique({
-					where: { id },
-					include: {
-						favorites: {
-							select: {
-								movie: true,
-							},
+		favorites: async ({ id }, { limit }, ctx) => {
+			const { favorites } = await ctx.prisma.user.findUnique({
+				where: { id },
+				include: {
+					favorites: {
+						take: limit,
+						select: {
+							movie: true,
 						},
 					},
-				});
-				return favorites.map((item) => ({ ...item.movie }));
-			} catch (e) {
-				console.error(e);
-				return null;
-			}
+				},
+			});
+			return favorites.map((item) => ({ ...item.movie }));
 		},
-		watched: async ({ id }, _, ctx) => {
-			try {
-				const { watched } = await ctx.prisma.user.findUnique({
-					where: { id },
-					include: {
-						watched: {
-							select: {
-								movie: true,
-							},
+		watched: async ({ id }, { limit }, ctx) => {
+			const { watched } = await ctx.prisma.user.findUnique({
+				where: { id },
+				include: {
+					watched: {
+						take: limit,
+						select: {
+							movie: true,
 						},
 					},
-				});
-				return watched.map((item) => ({ ...item.movie }));
-			} catch (e) {
-				console.error(e);
-				return null;
-			}
+				},
+			});
+			return watched.map((item) => ({ ...item.movie }));
 		},
-		watchLater: async ({ id }, _, ctx) => {
-			try {
-				const { watchLater } = await ctx.prisma.user.findUnique({
-					where: { id },
-					include: {
-						watchLater: {
-							select: {
-								movie: true,
-							},
+		watchLater: async ({ id }, { limit }, ctx) => {
+			const { watchLater } = await ctx.prisma.user.findUnique({
+				where: { id },
+				include: {
+					watchLater: {
+						take: limit,
+						select: {
+							movie: true,
 						},
 					},
-				});
-				return watchLater.map((item) => ({ ...item.movie }));
-			} catch (e) {
-				console.error(e);
-				return null;
-			}
+				},
+			});
+			return watchLater.map((item) => ({ ...item.movie }));
 		},
 	},
 
